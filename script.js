@@ -19,8 +19,8 @@ function update(time) {
     );
     document.documentElement.style.setProperty("--hue", hue + delta * 0.01);
 
-    if (isLose()) {
-      handleLose();
+    if (ball.rect().left<=0||ball.rect().right>=window.innerWidth) {
+      handleLose(ball.rect());
     }
   }
   lastTime = time;
@@ -29,15 +29,20 @@ function update(time) {
 
 function isLose() {
   const rect = ball.rect();
-  return rect.right >= window.innerWidth || rect.top <= 0;
+  return rect.right >= window.innerWidth ;
 }
 
-function handleLose() {
+function handleLose(rect) {
+  // alert("handleLose call");
+
   ball.reset();
   computerPaddle.reset();
+  console.log(document.getElementById("player-score"));
   if (rect.right >= window.innerWidth)
+  
     playerScoreElement.textContent =
       parseInt(playerScoreElement.textContent) + 1;
+      // document.getElementById("player-score").textContent="1";
   else
     computerScoreElement.textContent =
       parseInt(computerScoreElement.textContent) + 1;
